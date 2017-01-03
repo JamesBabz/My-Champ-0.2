@@ -27,11 +27,12 @@ public class TeamNameController implements Initializable {
     @FXML
     private TextField txtName;
 
-    
     private ChampModel model;
-    
+    private boolean isEdit = false;
+
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
@@ -39,7 +40,12 @@ public class TeamNameController implements Initializable {
     public void initialize(URL url, ResourceBundle rb)
     {
         model = ChampModel.getInstance();
-    }    
+        if (model.getEditTeam() != null)
+        {
+            isEdit = true;
+            txtName.setText(model.getEditTeam().getName());
+        }
+    }
 
     /**
      * Saves when "save" is pressed
@@ -48,7 +54,6 @@ public class TeamNameController implements Initializable {
     private void handleSave()
     {
         String name = txtName.getText();
-<<<<<<< HEAD
         if (name.equals(""))
         {
              Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -68,10 +73,6 @@ public class TeamNameController implements Initializable {
             }
             closeWindow();
         }
-=======
-        model.addTeam(name);
-        closeWindow();
->>>>>>> refs/remotes/origin/master
     }
 
     /**
@@ -82,13 +83,11 @@ public class TeamNameController implements Initializable {
     {
         closeWindow();
     }
-    
+
     private void closeWindow()
     {
         Stage stage = (Stage) btnCancel.getScene().getWindow();
         stage.close();
     }
-    
-    
-    
+
 }
