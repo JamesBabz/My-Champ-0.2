@@ -48,6 +48,9 @@ public class TeamManagerController implements Initializable
     private Button btnEdit;
     @FXML
     private Button btnStart;
+    
+    private final int MIN_TEAMS;
+    private final int MAX_TEAMS;
 
     private ObservableList teams;
     private ChampModel model;
@@ -55,6 +58,8 @@ public class TeamManagerController implements Initializable
 
     public TeamManagerController()
     {
+        this.MIN_TEAMS = 0;
+        this.MAX_TEAMS = 16;
         model = ChampModel.getInstance();
         observableListListener(model.getTeamNames());
     }
@@ -99,11 +104,11 @@ public class TeamManagerController implements Initializable
             public void onChanged(ListChangeListener.Change change)
             {
                 int amount = list.size();
-                if (amount >= 12)
+                if (amount >= MIN_TEAMS)
                 {
                     btnStart.setDisable(false);
                 }
-                if (amount == 16)
+                if (amount == MAX_TEAMS)
                 {
                     btnAdd.setDisable(true);
                 }
@@ -118,7 +123,7 @@ public class TeamManagerController implements Initializable
      * @throws IOException
      */
     @FXML
-    private void handleAddTeam() throws IOException
+    private void handleAddTeam()
     {
         try
         {
