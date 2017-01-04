@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -33,7 +35,8 @@ import mychamp.gui.model.ChampModel;
  *
  * @author Thomas
  */
-public class TeamManagerController implements Initializable {
+public class TeamManagerController implements Initializable
+{
 
     @FXML
     private ListView listTeams;
@@ -67,7 +70,8 @@ public class TeamManagerController implements Initializable {
         btnStart.setDisable(true);
         listTeams.setItems(model.getTeamNames());
 
-        listTeams.getSelectionModel().selectedItemProperty().addListener(new javafx.beans.value.ChangeListener() {
+        listTeams.getSelectionModel().selectedItemProperty().addListener(new javafx.beans.value.ChangeListener()
+        {
 
             @Override
             public void changed(ObservableValue selected, Object oldValue, Object newValue)
@@ -76,8 +80,7 @@ public class TeamManagerController implements Initializable {
                 {
                     btnEdit.setDisable(true);
                     btnRemove.setDisable(true);
-                }
-                else
+                } else
                 {
                     selectedTeamIndex = listTeams.getSelectionModel().getSelectedIndex();
                     btnEdit.setDisable(false);
@@ -90,7 +93,8 @@ public class TeamManagerController implements Initializable {
 
     private void observableListListener(ObservableList list)
     {
-        list.addListener(new ListChangeListener() {
+        list.addListener(new ListChangeListener()
+        {
             @Override
             public void onChanged(ListChangeListener.Change change)
             {
@@ -116,18 +120,14 @@ public class TeamManagerController implements Initializable {
     @FXML
     private void handleAddTeam() throws IOException
     {
-        Stage primaryStage = (Stage) listTeams.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mychamp/gui/view/TeamNameView.fxml"));
-        Parent root = loader.load();
+        try
+        {
+            openNewView("TeamNameView", "New team");
+        } catch (IOException ex)
+        {
+            Logger.getLogger(TeamManagerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-        Stage newStage = new Stage();
-        newStage.setScene(new Scene(root));
-
-        newStage.initModality(Modality.WINDOW_MODAL);
-        newStage.initOwner(primaryStage);
-        newStage.setTitle("New team");
-
-        newStage.show();
     }
 
     /**
@@ -136,11 +136,23 @@ public class TeamManagerController implements Initializable {
      * @throws IOException
      */
     @FXML
-    private void handleEditTeam() throws IOException
+    private void handleEditTeam()
     {
         model.setEditTeam(selectedTeamIndex);
+        try
+        {
+            openNewView("TeamNameView", "Edit team");
+        } catch (IOException ex)
+        {
+            Logger.getLogger(TeamManagerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void openNewView(String viewName, String title) throws IOException
+    {
         Stage primaryStage = (Stage) listTeams.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mychamp/gui/view/TeamNameView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mychamp/gui/view/" + viewName + ".fxml"));
         Parent root = loader.load();
 
         Stage newStage = new Stage();
@@ -148,10 +160,9 @@ public class TeamManagerController implements Initializable {
 
         newStage.initModality(Modality.WINDOW_MODAL);
         newStage.initOwner(primaryStage);
-        newStage.setTitle("Edit team");
+        newStage.setTitle(title);
 
         newStage.show();
-
     }
 
     @FXML
@@ -166,8 +177,7 @@ public class TeamManagerController implements Initializable {
         if (result.get() == ButtonType.OK)
         {
             model.removeTeam(selectedTeamIndex);
-        }
-        else
+        } else
         {
             // ... user chose CANCEL or closed the dialog
         }
@@ -196,4 +206,20 @@ public class TeamManagerController implements Initializable {
         }
     }
 
+    @FXML
+    private void handleStart()
+    {
+
+        Stage primaryStage = (Stage) listTeams.getScene().getWindow();
+        primaryStage.close();
+
+        try
+        {
+            openNewView("GroupView", "");
+        } catch (IOException ex)
+        {
+            Logger.getLogger(TeamManagerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 }
