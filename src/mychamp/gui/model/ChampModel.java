@@ -85,23 +85,23 @@ public class ChampModel {
 
     public void removeTeam(int team)
     {
-        
-         teams.remove(team);
-         setTeamNames();
+
+        teams.remove(team);
+        setTeamNames();
     }
 
     public void setEditTeam(int team)
     {
-        if(team >= 0)
+        if (team >= 0)
         {
-        editTeam = teams.get(team);
+            editTeam = teams.get(team);
         }
         else
         {
             editTeam = null;
         }
     }
-    
+
     public Team getEditTeam()
     {
         return editTeam;
