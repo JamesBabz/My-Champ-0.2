@@ -12,6 +12,24 @@ package mychamp.be;
 public class Team
 {
     String name;
+    int id;
+    
+    public Team(String name)
+    {
+        this.name = name;
+    }
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
+    
+    
 
     public String getName()
     {
@@ -22,9 +40,5 @@ public class Team
     {
         this.name = name;
     }
-    
-    public Team(String name)
-    {
-        this.name = name;
-    }
+  
 }
