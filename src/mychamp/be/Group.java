@@ -5,14 +5,14 @@
  */
 package mychamp.be;
 
-import mychamp.bll.GroupTemplate;
-
 /**
  *
  * @author James
  */
-public class Group extends GroupTemplate {
-    
+public class Group {
+
+    String name;
+
     public Group(String name)
     {
         this.name = name;
