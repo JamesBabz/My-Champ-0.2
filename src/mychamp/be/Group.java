@@ -17,9 +17,11 @@ public class Group {
     int[] awayTeams1;
     int[] homeTeams2;
     int[] awayTeams2;
+    int currentRound;
 
     public Group(String name, int teams)
     {
+        this.currentRound = 1;
         this.name = name;
         this.teamsInGroup = teams;
         groupPlay(teamsInGroup);
@@ -59,13 +61,13 @@ public class Group {
         {
             1, 4, 1, 1, 2, 4
         };
-        homeTeams2 = new int[]
-        {
-            3, 2, 2, 3, 4, 3
-        };
         awayTeams1 = new int[]
         {
             2, 1, 3, 4, 1, 2
+        };
+        homeTeams2 = new int[]
+        {
+            3, 2, 2, 3, 4, 3
         };
         awayTeams2 = new int[]
         {
@@ -83,29 +85,13 @@ public class Group {
         return homeTeams1;
     }
 
-    public void setHomeTeams1(int[] homeTeams1)
-    {
-        this.homeTeams1 = homeTeams1;
-    }
-
     public int[] getAwayTeams1()
     {
         return awayTeams1;
     }
-
-    public void setAwayTeams1(int[] awayTeams1)
-    {
-        this.awayTeams1 = awayTeams1;
-    }
-
     public int[] getHomeTeams2()
     {
         return homeTeams2;
-    }
-
-    public void setHomeTeams2(int[] homeTeams2)
-    {
-        this.homeTeams2 = homeTeams2;
     }
 
     public int[] getAwayTeams2()
@@ -113,10 +99,13 @@ public class Group {
         return awayTeams2;
     }
 
-    public void setAwayTeams2(int[] awayTeams2)
+    public int getCurrentRound()
     {
-        this.awayTeams2 = awayTeams2;
+        return currentRound;
     }
-    
-    
+
+    public void setCurrentRound(int currentRound)
+    {
+        this.currentRound = currentRound;
+    }
 }
