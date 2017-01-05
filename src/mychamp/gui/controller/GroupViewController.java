@@ -8,7 +8,6 @@ package mychamp.gui.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -16,16 +15,11 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import mychamp.be.Group;
 import mychamp.be.Team;
 import mychamp.gui.model.ChampModel;
@@ -213,6 +207,29 @@ public class GroupViewController implements Initializable {
     @FXML
     private void openNextRoundViewA() throws IOException
     {
+        int currRound = groupA.getCurrentRound() - 1;
+        Team home1 = null;
+        int home1Id = 0;
+        Team away1 = null;
+        int away1Id = 0;
+        Team home2 = null;
+        int home2Id = 0;
+        Team away2 = null;
+        int away2Id = 0;
+
+        home1 = groupATeams.get(groupA.getHomeTeams1()[currRound] - 1);
+        away1 = groupATeams.get(groupA.getAwayTeams1()[currRound] - 1);
+        home1Id = home1.getId();
+        away1Id = away1.getId();
+
+        if (groupA.getAwayTeams2() != null)
+        {
+            home2 = groupATeams.get(groupA.getHomeTeams2()[currRound] - 1);
+            away2 = groupATeams.get(groupA.getAwayTeams2()[currRound] - 1);
+            home2Id = home2.getId();
+            away2Id = away2.getId();
+        }
+        model.setRoundTeams(home1Id, away1Id, home2Id, away2Id);
         openNextRound("group A");
     }
 
@@ -236,6 +253,31 @@ public class GroupViewController implements Initializable {
 
     private void openNextRound(String title)
     {
+        Group group;
+        ObservableList<Team> groupTeams;
+        switch (title)
+        {
+            case "group A":
+                group = groupA;
+                groupTeams = groupATeams;
+                break;
+            case "group B":
+                group = groupB;
+                groupTeams = groupBTeams;
+                break;
+            case "group C":
+                group = groupB;
+                groupTeams = groupBTeams;
+                break;
+            case "group D":
+                group = groupB;
+                groupTeams = groupBTeams;
+                break;
+            default:
+                group = null;
+                groupTeams = null;
+                break;
+        }
         try
         {
             model.openNewView(anchorPane, "NextRoundView", title);

@@ -5,6 +5,7 @@
  */
 package mychamp.gui.model;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
@@ -16,6 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import mychamp.be.Team;
+import mychamp.dal.TeamDAO;
 
 /**
  *
@@ -26,6 +28,9 @@ public class ChampModel {
     private final ArrayList<Team> teams;
     private final ObservableList<String> teamNames;
     private Team editTeam;
+    private TeamDAO teamDAO;
+    int[] firstMatch;
+    int[] secondMatch;
 
     private static ChampModel instance;
 
@@ -38,8 +43,16 @@ public class ChampModel {
         }
         return instance;
     }
-    
-        public void openNewView(Pane current, String viewName, String title) throws IOException
+
+    public ChampModel()
+    {
+        this.teamNames = FXCollections.observableArrayList();
+        teams = new ArrayList<>();
+        teamDAO = new TeamDAO();
+
+    }
+
+    public void openNewView(Pane current, String viewName, String title) throws IOException
     {
         Stage primaryStage = (Stage) current.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mychamp/gui/view/" + viewName + ".fxml"));
@@ -55,13 +68,6 @@ public class ChampModel {
         newStage.show();
     }
 
-
-    private ChampModel()
-    {
-        this.teamNames = FXCollections.observableArrayList();
-        teams = new ArrayList<>();
-    }
-
     /**
      * Creates a new team
      *
@@ -69,6 +75,7 @@ public class ChampModel {
      */
     public void addTeam(String name)
     {
+        
         Team team = new Team(name);
         teams.add(team);
         setTeamNames();
@@ -91,7 +98,6 @@ public class ChampModel {
      */
     public ObservableList<String> getTeamNames()
     {
-
         return teamNames;
     }
 
@@ -138,4 +144,28 @@ public class ChampModel {
         editTeam = null;
         setTeamNames();
     }
+    
+    public void setRoundTeams(int home1Id, int away1Id, int home2Id, int away2Id)
+    {
+        firstMatch = new int[]
+        {
+            home1Id, away1Id
+        };
+        secondMatch = new int[]
+        {
+            home2Id, away2Id
+        };
+    }
+
+    public int[] getFirstMatch()
+    {
+        return firstMatch;
+    }
+
+    public int[] getSecondMatch()
+    {
+        return secondMatch;
+    }
+    
+    
 }
