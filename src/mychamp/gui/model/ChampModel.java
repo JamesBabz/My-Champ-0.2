@@ -5,9 +5,16 @@
  */
 package mychamp.gui.model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import mychamp.be.Team;
 
 /**
@@ -31,6 +38,23 @@ public class ChampModel {
         }
         return instance;
     }
+    
+        public void openNewView(Pane current, String viewName, String title) throws IOException
+    {
+        Stage primaryStage = (Stage) current.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mychamp/gui/view/" + viewName + ".fxml"));
+        Parent root = loader.load();
+
+        Stage newStage = new Stage();
+        newStage.setScene(new Scene(root));
+
+        newStage.initModality(Modality.WINDOW_MODAL);
+        newStage.initOwner(primaryStage);
+        newStage.setTitle(title);
+
+        newStage.show();
+    }
+
 
     private ChampModel()
     {
@@ -85,23 +109,23 @@ public class ChampModel {
 
     public void removeTeam(int team)
     {
-        
-         teams.remove(team);
-         setTeamNames();
+
+        teams.remove(team);
+        setTeamNames();
     }
 
     public void setEditTeam(int team)
     {
-        if(team >= 0)
+        if (team >= 0)
         {
-        editTeam = teams.get(team);
+            editTeam = teams.get(team);
         }
         else
         {
             editTeam = null;
         }
     }
-    
+
     public Team getEditTeam()
     {
         return editTeam;
