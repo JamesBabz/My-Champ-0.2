@@ -207,52 +207,34 @@ public class GroupViewController implements Initializable {
     @FXML
     private void openNextRoundViewA() throws IOException
     {
-        int currRound = groupA.getCurrentRound() - 1;
-        Team home1 = null;
-        int home1Id = 0;
-        Team away1 = null;
-        int away1Id = 0;
-        Team home2 = null;
-        int home2Id = 0;
-        Team away2 = null;
-        int away2Id = 0;
-
-        home1 = groupATeams.get(groupA.getHomeTeams1()[currRound] - 1);
-        away1 = groupATeams.get(groupA.getAwayTeams1()[currRound] - 1);
-        home1Id = home1.getId();
-        away1Id = away1.getId();
-
-        if (groupA.getAwayTeams2() != null)
-        {
-            home2 = groupATeams.get(groupA.getHomeTeams2()[currRound] - 1);
-            away2 = groupATeams.get(groupA.getAwayTeams2()[currRound] - 1);
-            home2Id = home2.getId();
-            away2Id = away2.getId();
-        }
-        model.setRoundTeams(home1Id, away1Id, home2Id, away2Id);
+        setMatchRound("A");
         openNextRound("group A");
     }
 
     @FXML
     private void openNextRoundViewB() throws IOException
     {
+        setMatchRound("B");
         openNextRound("group B");
     }
 
     @FXML
     private void openNextRoundViewC() throws IOException
     {
+        setMatchRound("C");
         openNextRound("group C");
     }
 
     @FXML
     private void openNextRoundViewD() throws IOException
     {
+        setMatchRound("D");
         openNextRound("group D");
     }
 
     private void openNextRound(String title)
     {
+
         try
         {
             model.openNewView(anchorPane, "NextRoundView", title);
@@ -261,6 +243,59 @@ public class GroupViewController implements Initializable {
         {
             Logger.getLogger(TeamManagerController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void setMatchRound(String groupName)
+    {
+        Group group;
+        ObservableList<Team> groupTeams;
+        int currRound;
+        switch (groupName)
+        {
+            case "A":
+                group = groupA;
+                groupTeams = groupATeams;
+                break;
+            case "B":
+                group = groupB;
+                groupTeams = groupBTeams;
+                break;
+            case "C":
+                group = groupB;
+                groupTeams = groupBTeams;
+                break;
+            case "D":
+                group = groupB;
+                groupTeams = groupBTeams;
+                break;
+            default:
+                group = null;
+                groupTeams = null;
+                break;
+        }
+        currRound = group.getCurrentRound() - 1;
+        Team home1;
+        int home1Id;
+        Team away1;
+        int away1Id;
+        Team home2;
+        int home2Id = 0;
+        Team away2;
+        int away2Id = 0;
+
+        home1 = groupTeams.get(group.getHomeTeams1()[currRound] - 1);
+        away1 = groupTeams.get(group.getAwayTeams1()[currRound] - 1);
+        home1Id = home1.getId();
+        away1Id = away1.getId();
+
+        if (group.getAwayTeams2() != null)
+        {
+            home2 = groupTeams.get(group.getHomeTeams2()[currRound] - 1);
+            away2 = groupTeams.get(group.getAwayTeams2()[currRound] - 1);
+            home2Id = home2.getId();
+            away2Id = away2.getId();
+        }
+        model.setRoundTeams(home1Id, away1Id, home2Id, away2Id);
     }
 
 }
