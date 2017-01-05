@@ -5,11 +5,13 @@
  */
 package mychamp.be;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Thomas
  */
-public class Team
+public class Team implements Serializable
 {
     String name;
     int id;
