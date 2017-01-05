@@ -174,4 +174,16 @@ public class ChampModel {
             home2Id, away2Id
         };
     }
+
+    public int[] getFirstMatch()
+    {
+        return firstMatch;
+    }
+
+    public int[] getSecondMatch()
+    {
+        return secondMatch;
+    }
+    
+    
 }

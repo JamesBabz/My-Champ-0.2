@@ -253,6 +253,31 @@ public class GroupViewController implements Initializable {
 
     private void openNextRound(String title)
     {
+        Group group;
+        ObservableList<Team> groupTeams;
+        switch (title)
+        {
+            case "group A":
+                group = groupA;
+                groupTeams = groupATeams;
+                break;
+            case "group B":
+                group = groupB;
+                groupTeams = groupBTeams;
+                break;
+            case "group C":
+                group = groupB;
+                groupTeams = groupBTeams;
+                break;
+            case "group D":
+                group = groupB;
+                groupTeams = groupBTeams;
+                break;
+            default:
+                group = null;
+                groupTeams = null;
+                break;
+        }
         try
         {
             model.openNewView(anchorPane, "NextRoundView", title);
