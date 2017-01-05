@@ -25,6 +25,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import mychamp.bll.TeamManager;
 import mychamp.gui.model.ChampModel;
 
 /**
@@ -50,6 +51,8 @@ public class TeamManagerController implements Initializable {
 
     private ObservableList teams;
     private ChampModel model;
+    private TeamManager teamManager;
+    
     private int selectedTeamIndex;
     @FXML
     private AnchorPane anchorPane;
@@ -59,6 +62,7 @@ public class TeamManagerController implements Initializable {
         this.MAX_TEAMS = 16;
         model = ChampModel.getInstance();
         observableListListener(model.getTeamNames());
+        teamManager = new TeamManager();
     }
 
     /**
@@ -71,7 +75,7 @@ public class TeamManagerController implements Initializable {
         btnStart.setDisable(true);
         listTeams.setItems(model.getTeamNames());
         try {
-            model.loadTeamData();
+            teamManager.loadTeamData();
         } catch (IOException ex) {
             Logger.getLogger(TeamManagerController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -179,7 +183,7 @@ public class TeamManagerController implements Initializable {
         
         try 
         {
-            model.saveTeamData();
+            teamManager.saveTeamData();
         } 
         catch (IOException ex) 
         {
