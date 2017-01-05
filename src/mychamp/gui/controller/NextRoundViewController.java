@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
@@ -38,6 +39,8 @@ public class NextRoundViewController implements Initializable
     private TextField txtAway1;
     @FXML
     private TextField txtAway2;
+    @FXML
+    private AnchorPane anchorPane;
 
     /**
      * Initializes the controller class.

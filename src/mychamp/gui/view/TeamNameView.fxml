@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="130.0" prefWidth="303.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mychamp.gui.controller.TeamNameController">
+<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="130.0" prefWidth="303.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mychamp.gui.controller.TeamNameController">
    <children>
       <Label focusTraversable="false" layoutX="30.0" layoutY="37.0" text="Team name:" />
       <TextField fx:id="txtName" layoutX="114.0" layoutY="33.0" />

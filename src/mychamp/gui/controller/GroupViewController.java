@@ -5,17 +5,27 @@
  */
 package mychamp.gui.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import mychamp.be.Group;
 import mychamp.be.Team;
 import mychamp.gui.model.ChampModel;
@@ -26,8 +36,9 @@ import mychamp.gui.model.ChampModel;
  * @author Thomas
  */
 public class GroupViewController implements Initializable {
-    
-    
+
+    ChampModel model;
+
     private ArrayList<Team> teams;
     private ObservableList<Team> groupATeams;
     private ObservableList<Team> groupBTeams;
@@ -38,7 +49,6 @@ public class GroupViewController implements Initializable {
     private Group groupB;
     private Group groupC;
     private Group groupD;
-    
 
     @FXML
     private TableView<Team> tableA;
@@ -48,7 +58,7 @@ public class GroupViewController implements Initializable {
     private TableView<Team> tableC;
     @FXML
     private TableView<Team> tableD;
-    
+
     @FXML
     private TableColumn<Team, String> colTeamA;
     @FXML
@@ -65,7 +75,7 @@ public class GroupViewController implements Initializable {
     private TableColumn<Team, Integer> colGAA;
     @FXML
     private TableColumn<Team, Integer> colPointsA;
-    
+
     @FXML
     private TableColumn<Team, String> colTeamB;
     @FXML
@@ -82,7 +92,7 @@ public class GroupViewController implements Initializable {
     private TableColumn<Team, Integer> colGAB;
     @FXML
     private TableColumn<Team, Integer> colPointsB;
-    
+
     @FXML
     private TableColumn<Team, String> colTeamC;
     @FXML
@@ -99,7 +109,7 @@ public class GroupViewController implements Initializable {
     private TableColumn<Team, Integer> colGAC;
     @FXML
     private TableColumn<Team, Integer> colPointsC;
-    
+
     @FXML
     private TableColumn<Team, String> colTeamD;
     @FXML
@@ -116,6 +126,8 @@ public class GroupViewController implements Initializable {
     private TableColumn<Team, Integer> colGAD;
     @FXML
     private TableColumn<Team, Integer> colPointsD;
+    @FXML
+    private AnchorPane anchorPane;
 
     /**
      * Initializes the controller class.
@@ -123,24 +135,24 @@ public class GroupViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        ChampModel model = ChampModel.getInstance();
+        model = ChampModel.getInstance();
         teams = model.getTeams();
         colTeamA.setCellValueFactory(new PropertyValueFactory<>("name"));
         colTeamB.setCellValueFactory(new PropertyValueFactory<>("name"));
         colTeamC.setCellValueFactory(new PropertyValueFactory<>("name"));
         colTeamD.setCellValueFactory(new PropertyValueFactory<>("name"));
-        
-        
-        
+
         groupInit();
         setTeamIds();
-        addTeamsToGroups(teams);
-        
-        
+
         tableA.setItems(groupATeams);
         tableB.setItems(groupBTeams);
         tableC.setItems(groupCTeams);
         tableD.setItems(groupDTeams);
+//        System.out.println(Arrays.toString(groupD.getHomeTeams1()));
+//        System.out.println(Arrays.toString(groupD.getAwayTeams1()));
+//        System.out.println(Arrays.toString(groupD.getHomeTeams2()));
+//        System.out.println(Arrays.toString(groupD.getAwayTeams2()));
     }
 
     private void groupInit()
@@ -149,10 +161,11 @@ public class GroupViewController implements Initializable {
         groupBTeams = FXCollections.observableArrayList();
         groupCTeams = FXCollections.observableArrayList();
         groupDTeams = FXCollections.observableArrayList();
-        groupA = new Group("A");
-        groupB = new Group("B");
-        groupC = new Group("C");
-        groupD = new Group("D");
+        addTeamsToGroups(teams);
+        groupA = new Group("A", groupATeams.size());
+        groupB = new Group("B", groupBTeams.size());
+        groupC = new Group("C", groupCTeams.size());
+        groupD = new Group("D", groupDTeams.size());
     }
 
     private void setTeamIds()
@@ -194,6 +207,42 @@ public class GroupViewController implements Initializable {
             {
                 currentGroup++;
             }
+        }
+    }
+
+    @FXML
+    private void openNextRoundViewA() throws IOException
+    {
+        openNextRound("group A");
+    }
+
+    @FXML
+    private void openNextRoundViewB() throws IOException
+    {
+        openNextRound("group B");
+    }
+
+    @FXML
+    private void openNextRoundViewC() throws IOException
+    {
+        openNextRound("group C");
+    }
+
+    @FXML
+    private void openNextRoundViewD() throws IOException
+    {
+        openNextRound("group D");
+    }
+
+    private void openNextRound(String title)
+    {
+        try
+        {
+            model.openNewView(anchorPane, "NextRoundView", title);
+        }
+        catch (IOException ex)
+        {
+            Logger.getLogger(TeamManagerController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

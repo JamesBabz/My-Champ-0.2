@@ -26,6 +26,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import mychamp.gui.model.ChampModel;
@@ -55,6 +56,8 @@ public class TeamManagerController implements Initializable
     private ObservableList teams;
     private ChampModel model;
     private int selectedTeamIndex;
+    @FXML
+    private AnchorPane anchorPane;
 
     public TeamManagerController()
     {
@@ -127,7 +130,7 @@ public class TeamManagerController implements Initializable
     {
         try
         {
-            openNewView("TeamNameView", "New team");
+            model.openNewView(anchorPane, "TeamNameView", "New team");
         } catch (IOException ex)
         {
             Logger.getLogger(TeamManagerController.class.getName()).log(Level.SEVERE, null, ex);
@@ -146,7 +149,7 @@ public class TeamManagerController implements Initializable
         model.setEditTeam(selectedTeamIndex);
         try
         {
-            openNewView("TeamNameView", "Edit team");
+            model.openNewView( anchorPane, "TeamNameView", "Edit team");
         } catch (IOException ex)
         {
             Logger.getLogger(TeamManagerController.class.getName()).log(Level.SEVERE, null, ex);
@@ -154,21 +157,6 @@ public class TeamManagerController implements Initializable
 
     }
 
-    private void openNewView(String viewName, String title) throws IOException
-    {
-        Stage primaryStage = (Stage) listTeams.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mychamp/gui/view/" + viewName + ".fxml"));
-        Parent root = loader.load();
-
-        Stage newStage = new Stage();
-        newStage.setScene(new Scene(root));
-
-        newStage.initModality(Modality.WINDOW_MODAL);
-        newStage.initOwner(primaryStage);
-        newStage.setTitle(title);
-
-        newStage.show();
-    }
 
     @FXML
     private void handleRemoveTeam()
@@ -220,7 +208,7 @@ public class TeamManagerController implements Initializable
 
         try
         {
-            openNewView("GroupView", "");
+            model.openNewView(anchorPane, "GroupView", "");
         } catch (IOException ex)
         {
             Logger.getLogger(TeamManagerController.class.getName()).log(Level.SEVERE, null, ex);
