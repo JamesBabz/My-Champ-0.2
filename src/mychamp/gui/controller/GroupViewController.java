@@ -143,8 +143,6 @@ public class GroupViewController implements Initializable {
         tableB.setItems(groupBTeams);
         tableC.setItems(groupCTeams);
         tableD.setItems(groupDTeams);
-
-        setMatchRounds();
 //        System.out.println(Arrays.toString(groupD.getHomeTeams1()));
 //        System.out.println(Arrays.toString(groupD.getAwayTeams1()));
 //        System.out.println(Arrays.toString(groupD.getHomeTeams2()));
@@ -209,24 +207,28 @@ public class GroupViewController implements Initializable {
     @FXML
     private void openNextRoundViewA() throws IOException
     {
+        setMatchRound("A");
         openNextRound("group A");
     }
 
     @FXML
     private void openNextRoundViewB() throws IOException
     {
+        setMatchRound("B");
         openNextRound("group B");
     }
 
     @FXML
     private void openNextRoundViewC() throws IOException
     {
+        setMatchRound("C");
         openNextRound("group C");
     }
 
     @FXML
     private void openNextRoundViewD() throws IOException
     {
+        setMatchRound("D");
         openNextRound("group D");
     }
 
@@ -241,15 +243,6 @@ public class GroupViewController implements Initializable {
         {
             Logger.getLogger(TeamManagerController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    private void setMatchRounds()
-    {
-        setMatchRound("A");
-        setMatchRound("B");
-        setMatchRound("C");
-        setMatchRound("D");
-
     }
 
     private void setMatchRound(String groupName)

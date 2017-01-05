@@ -17,38 +17,41 @@ import mychamp.gui.model.ChampModel;
  * @author Thomas
  */
 public class TeamManager {
-    
+
     public TeamDAO teamDAO;
     public ChampModel model;
-    
-    
-    public TeamManager() {
 
-       teamDAO = new TeamDAO();
-       model = ChampModel.getInstance();
+    public TeamManager()
+    {
+
+        teamDAO = new TeamDAO();
+        model = ChampModel.getInstance();
 
     }
 
-    public void loadTeamData() throws IOException, FileNotFoundException, ClassNotFoundException {
-       
+    public void loadTeamData() throws IOException, FileNotFoundException, ClassNotFoundException
+    {
+
         model.getTeams().clear();
-        for (Team team : teamDAO.readObjectData("TeamData.dat")) {
+        for (Team team : teamDAO.readObjectData("TeamData.dat"))
+        {
             model.addTeam(team.getName());
-          
+
         }
 
     }
 
-    public void saveTeamData() throws IOException {
-        System.out.println(model.getTeams().toString());
+    public void saveTeamData() throws IOException
+    {
         ArrayList<Team> teamsToSave = new ArrayList<>();
-        for (Team team : model.getTeams()) {
+        for (Team team : model.getTeams())
+        {
             teamsToSave.add(team);
-          
+
         }
-        
+
         teamDAO.writeObjectData(teamsToSave, "TeamData.dat");
-     
+
     }
 
 }
