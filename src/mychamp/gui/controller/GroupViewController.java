@@ -5,17 +5,26 @@
  */
 package mychamp.gui.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import mychamp.be.Group;
 import mychamp.be.Team;
 import mychamp.gui.model.ChampModel;
@@ -27,6 +36,7 @@ import mychamp.gui.model.ChampModel;
  */
 public class GroupViewController implements Initializable {
     
+    ChampModel model;
     
     private ArrayList<Team> teams;
     private ObservableList<Team> groupATeams;
@@ -116,6 +126,8 @@ public class GroupViewController implements Initializable {
     private TableColumn<Team, Integer> colGAD;
     @FXML
     private TableColumn<Team, Integer> colPointsD;
+    @FXML
+    private AnchorPane anchorPane;
 
     /**
      * Initializes the controller class.
@@ -123,7 +135,7 @@ public class GroupViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        ChampModel model = ChampModel.getInstance();
+        model = ChampModel.getInstance();
         teams = model.getTeams();
         colTeamA.setCellValueFactory(new PropertyValueFactory<>("name"));
         colTeamB.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -194,6 +206,39 @@ public class GroupViewController implements Initializable {
             {
                 currentGroup++;
             }
+        }
+    }
+    
+    @FXML
+    private void openNextRoundViewA() throws IOException
+    {
+        openNextRound("group A");
+    }
+  @FXML
+    private void openNextRoundViewB() throws IOException
+    {
+        openNextRound("group B");
+    }
+      @FXML
+    private void openNextRoundViewC() throws IOException
+    {
+        openNextRound("group C");
+    }
+      @FXML
+    private void openNextRoundViewD() throws IOException
+    {
+        openNextRound("group D");
+    }
+    
+    
+    private void openNextRound(String title)
+    {
+        try
+        {
+            model.openNewView(anchorPane, "NextRoundView", title);
+        } catch (IOException ex)
+        {
+            Logger.getLogger(TeamManagerController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
