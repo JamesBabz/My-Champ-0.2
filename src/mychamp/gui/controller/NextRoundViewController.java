@@ -6,12 +6,15 @@
 package mychamp.gui.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import mychamp.be.Team;
+import mychamp.gui.model.ChampModel;
 
 /**
  * FXML Controller class
@@ -48,7 +51,32 @@ public class NextRoundViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        // TODO
+        ChampModel model = ChampModel.getInstance();
+        getLblName(model);
+   
+    }    
+
+    private void getLblName(ChampModel model)
+    {
+        ArrayList<Team> teams = model.getTeams();
+        for (Team team : teams)
+        {
+            if (team.getId() == model.getFirstMatch()[0])
+            {
+                lblHome1.setText(team.getName());
+            } else if (team.getId() == model.getFirstMatch() [1])
+            {
+                lblAway1.setText(team.getName());
+            } else if (team.getId()==model.getSecondMatch()[0])
+            {
+                lblHome2.setText(team.getName());
+            } else if (team.getId() == model.getSecondMatch()[1])
+            {
+                lblAway2.setText(team.getName());
+            }
+            
+            
+        }
     }    
     
 }
