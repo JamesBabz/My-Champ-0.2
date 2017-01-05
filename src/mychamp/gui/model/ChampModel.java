@@ -44,7 +44,7 @@ public class ChampModel {
         return instance;
     }
 
-    private ChampModel()
+    public ChampModel()
     {
         this.teamNames = FXCollections.observableArrayList();
         teams = new ArrayList<>();
@@ -75,6 +75,7 @@ public class ChampModel {
      */
     public void addTeam(String name)
     {
+        
         Team team = new Team(name);
         teams.add(team);
         setTeamNames();
@@ -143,26 +144,7 @@ public class ChampModel {
         editTeam = null;
         setTeamNames();
     }
-
-    public void loadTeamData() throws IOException, FileNotFoundException, ClassNotFoundException
-    {
-        getTeams().clear();
-        for (Team team : teamDAO.readObjectData("TeamData.dat"))
-        {
-            addTeam(team.getName());
-        }
-    }
-
-    public void saveTeamData() throws IOException
-    {
-        ArrayList<Team> teamsToSave = new ArrayList<>();
-        for (Team team : getTeams())
-        {
-            teamsToSave.add(team);
-        }
-        teamDAO.writeObjectData(teamsToSave, "TeamData.dat");
-    }
-
+    
     public void setRoundTeams(int home1Id, int away1Id, int home2Id, int away2Id)
     {
         firstMatch = new int[]
