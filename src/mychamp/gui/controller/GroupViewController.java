@@ -34,10 +34,10 @@ public class GroupViewController implements Initializable {
     private ObservableList<Team> groupCTeams;
     private ObservableList<Team> groupDTeams;
 
-    Group groupA;
-    Group groupB;
-    Group groupC;
-    Group groupD;
+    private Group groupA;
+    private Group groupB;
+    private Group groupC;
+    private Group groupD;
     
 
     @FXML
