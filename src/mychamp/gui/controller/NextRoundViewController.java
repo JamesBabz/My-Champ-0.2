@@ -53,9 +53,16 @@ public class NextRoundViewController implements Initializable
     {
         ChampModel model = ChampModel.getInstance();
         getLblName(model);
+        getLblRound();
    
     }    
-
+    
+    private void getLblRound()
+    {
+     
+    }
+    
+    
     private void getLblName(ChampModel model)
     {
         ArrayList<Team> teams = model.getTeams();
