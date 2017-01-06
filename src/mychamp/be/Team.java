@@ -11,10 +11,10 @@ import java.io.Serializable;
  *
  * @author Thomas
  */
-public class Team implements Serializable
-{
-    String name;
+public class Team implements Serializable {
+
     int id;
+    String name;
     int played;
     int won;
     int draw;
@@ -22,18 +22,18 @@ public class Team implements Serializable
     int goalFor;
     int goalAgainst;
     int point;
-    
+
     public Team(String name)
     {
-        this.goalFor = 0;
-        this.lost = 0;
-        this.draw = 0;
-        this.won = 0;
+        this.name = name;
         this.played = 0;
+        this.won = 0;
+        this.draw = 0;
+        this.lost = 0;
+        this.goalFor = 0;
         this.goalAgainst = 0;
         this.point = 0;
-        this.name = name;
-        
+
     }
 
     public int getId()
@@ -55,8 +55,7 @@ public class Team implements Serializable
     {
         this.name = name;
     }
-    
-    
+
     public int getPlayed()
     {
         return played;
@@ -122,9 +121,9 @@ public class Team implements Serializable
         return point;
     }
 
-    public void setPoint(int point)
+    public void setPoint()
     {
-        this.point = point;
+        this.point = getWon() * 3 + getDraw();
     }
-  
+
 }

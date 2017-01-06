@@ -46,8 +46,8 @@ public class TeamManagerController implements Initializable {
     @FXML
     private Button btnStart;
 
-    private final int MIN_TEAMS;
-    private final int MAX_TEAMS;
+    private final static int MIN_TEAMS = 12;
+    private final static int MAX_TEAMS = 16;
 
     private ObservableList teams;
     private ChampModel model;
@@ -59,8 +59,6 @@ public class TeamManagerController implements Initializable {
 
     public TeamManagerController()
     {
-        this.MIN_TEAMS = 0;
-        this.MAX_TEAMS = 16;
         model = ChampModel.getInstance();
         observableListListener(model.getTeamNames());
         teamManager = new TeamManager();
