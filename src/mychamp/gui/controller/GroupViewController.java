@@ -143,7 +143,6 @@ public class GroupViewController implements Initializable {
         setTeamIds();
 
         populateTables();
-        
 
     }
 
@@ -172,10 +171,16 @@ public class GroupViewController implements Initializable {
         groupCTeams = FXCollections.observableArrayList();
         groupDTeams = FXCollections.observableArrayList();
         addTeamsToGroups(teams);
-        groupA = new Group("A", groupATeams.size());
-        groupB = new Group("B", groupBTeams.size());
-        groupC = new Group("C", groupCTeams.size());
-        groupD = new Group("D", groupDTeams.size());
+        
+//        groupA = new Group("A", groupATeams.size());
+//        groupB = new Group("B", groupBTeams.size());
+//        groupC = new Group("C", groupCTeams.size());
+//        groupD = new Group("D", groupDTeams.size());
+
+        groupA = new Group("A", groupATeams);
+        groupB = new Group("B", groupBTeams);
+        groupC = new Group("C", groupCTeams);
+        groupD = new Group("D", groupDTeams);
     }
 
     private void setTeamIds()

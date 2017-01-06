@@ -11,8 +11,8 @@ import java.io.Serializable;
  *
  * @author Thomas
  */
-public class Team implements Serializable
-{
+public class Team implements Serializable {
+
     int id;
     String name;
     int played;
@@ -22,7 +22,7 @@ public class Team implements Serializable
     int goalFor;
     int goalAgainst;
     int point;
-    
+
     public Team(String name)
     {
         this.name = name;
@@ -33,7 +33,7 @@ public class Team implements Serializable
         this.goalFor = 0;
         this.goalAgainst = 0;
         this.point = 0;
-        
+
     }
 
     public int getId()
@@ -55,8 +55,7 @@ public class Team implements Serializable
     {
         this.name = name;
     }
-    
-    
+
     public int getPlayed()
     {
         return played;
@@ -122,9 +121,9 @@ public class Team implements Serializable
         return point;
     }
 
-    public void setPoint(int point)
+    public void setPoint()
     {
-        this.point = point;
+        this.point = getWon() * 3 + getDraw();
     }
-  
+
 }
