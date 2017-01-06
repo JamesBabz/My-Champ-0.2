@@ -263,6 +263,7 @@ public class GroupViewController implements Initializable {
                 break;
             case "C":
                 group = groupC;
+                groupTeams = groupCTeams;
                 break;
             case "D":
                 group = groupD;
