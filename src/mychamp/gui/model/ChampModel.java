@@ -29,25 +29,31 @@ public class ChampModel {
     private final ObservableList<String> teamNames;
     private Team editTeam;
     private TeamDAO teamDAO;
+    int[] firstMatch;
+    int[] secondMatch;
 
     private static ChampModel instance;
 
     //Singleton
-    public static ChampModel getInstance() {
-        if (instance == null) {
+    public static ChampModel getInstance()
+    {
+        if (instance == null)
+        {
             instance = new ChampModel();
         }
         return instance;
     }
 
-    private ChampModel() {
+    public ChampModel()
+    {
         this.teamNames = FXCollections.observableArrayList();
         teams = new ArrayList<>();
         teamDAO = new TeamDAO();
 
     }
-    
-       public void openNewView(Pane current, String viewName, String title) throws IOException {
+
+    public void openNewView(Pane current, String viewName, String title) throws IOException
+    {
         Stage primaryStage = (Stage) current.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mychamp/gui/view/" + viewName + ".fxml"));
         Parent root = loader.load();
@@ -67,7 +73,9 @@ public class ChampModel {
      *
      * @param name - Name of the team
      */
-    public void addTeam(String name) {
+    public void addTeam(String name)
+    {
+        
         Team team = new Team(name);
         teams.add(team);
         setTeamNames();
@@ -78,7 +86,8 @@ public class ChampModel {
      *
      * @return - Team object
      */
-    public ArrayList<Team> getTeams() {
+    public ArrayList<Team> getTeams()
+    {
         return teams;
     }
 
@@ -87,57 +96,76 @@ public class ChampModel {
      *
      * @return - Team names
      */
-    public ObservableList<String> getTeamNames() {
+    public ObservableList<String> getTeamNames()
+    {
         return teamNames;
     }
 
     /**
      * Sets the team names
      */
-    private void setTeamNames() {
+    private void setTeamNames()
+    {
         teamNames.clear();
-        for (Team team : teams) {
+        for (Team team : teams)
+        {
             teamNames.add(team.getName());
         }
     }
 
-    public void removeTeam(int team) {
+    public void removeTeam(int team)
+    {
 
         teams.remove(team);
         setTeamNames();
     }
 
-    public void setEditTeam(int team) {
-        if (team >= 0) {
+    public void setEditTeam(int team)
+    {
+        if (team >= 0)
+        {
             editTeam = teams.get(team);
-        } else {
+        }
+        else
+        {
             editTeam = null;
         }
     }
 
-    public Team getEditTeam() {
+    public Team getEditTeam()
+    {
         return editTeam;
     }
 
-    public void editTeam(String name) {
+    public void editTeam(String name)
+    {
         int index = teams.indexOf(editTeam);
         teams.set(index, new Team(name));
         editTeam = null;
         setTeamNames();
     }
-
-    public void loadTeamData() throws IOException, FileNotFoundException, ClassNotFoundException {
-        getTeams().clear();
-        for (Team team : teamDAO.readObjectData("TeamData.dat")) {
-            addTeam(team.getName());
-        }
+    
+    public void setRoundTeams(int home1Id, int away1Id, int home2Id, int away2Id)
+    {
+        firstMatch = new int[]
+        {
+            home1Id, away1Id
+        };
+        secondMatch = new int[]
+        {
+            home2Id, away2Id
+        };
     }
 
-    public void saveTeamData() throws IOException {
-        ArrayList<Team> teamsToSave = new ArrayList<>();
-        for (Team team : getTeams()) {
-            teamsToSave.add(team);
-        }
-        teamDAO.writeObjectData(teamsToSave, "TeamData.dat");
+    public int[] getFirstMatch()
+    {
+        return firstMatch;
     }
+
+    public int[] getSecondMatch()
+    {
+        return secondMatch;
+    }
+    
+    
 }

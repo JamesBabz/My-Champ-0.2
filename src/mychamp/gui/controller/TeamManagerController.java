@@ -25,6 +25,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import mychamp.bll.TeamManager;
 import mychamp.gui.model.ChampModel;
 
 /**
@@ -50,60 +51,77 @@ public class TeamManagerController implements Initializable {
 
     private ObservableList teams;
     private ChampModel model;
+    private TeamManager teamManager;
+
     private int selectedTeamIndex;
     @FXML
     private AnchorPane anchorPane;
 
-    public TeamManagerController() {
+    public TeamManagerController()
+    {
         this.MIN_TEAMS = 0;
         this.MAX_TEAMS = 16;
         model = ChampModel.getInstance();
         observableListListener(model.getTeamNames());
+        teamManager = new TeamManager();
     }
 
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)
+    {
         btnEdit.setDisable(true);
         btnRemove.setDisable(true);
         btnStart.setDisable(true);
         listTeams.setItems(model.getTeamNames());
-        try {
-            model.loadTeamData();
-        } catch (IOException ex) {
-            Logger.getLogger(TeamManagerController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        try
+        {
+            teamManager.loadTeamData();
+        }
+        catch (IOException ex)
+        {
             Logger.getLogger(TeamManagerController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        listTeams.getSelectionModel().selectedItemProperty().addListener(new javafx.beans.value.ChangeListener() {
-
-            @Override
-            public void changed(ObservableValue selected, Object oldValue, Object newValue) {
-                if (selected.getValue() == null) {
-                    btnEdit.setDisable(true);
-                    btnRemove.setDisable(true);
-                } else {
-                    selectedTeamIndex = listTeams.getSelectionModel().getSelectedIndex();
-                    btnEdit.setDisable(false);
-                    btnRemove.setDisable(false);
-                }
-            }
-
+        catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(TeamManagerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        listTeams.getSelectionModel().selectedItemProperty().addListener((selected, oldValue, newValue)
+                -> 
+                {
+                    if (selected.getValue() == null)
+                    {
+                        btnEdit.setDisable(true);
+                        btnRemove.setDisable(true);
+                    }
+                    else
+                    {
+                        selectedTeamIndex = listTeams.getSelectionModel().getSelectedIndex();
+                        btnEdit.setDisable(false);
+                        btnRemove.setDisable(false);
+                    }
         });
     }
 
-    private void observableListListener(ObservableList list) {
+    private void observableListListener(ObservableList list)
+    {
         list.addListener(new ListChangeListener() {
             @Override
-            public void onChanged(ListChangeListener.Change change) {
+            public void onChanged(ListChangeListener.Change change)
+            {
                 int amount = list.size();
-                if (amount >= MIN_TEAMS) {
+                if (amount >= MIN_TEAMS)
+                {
                     btnStart.setDisable(false);
                 }
-                if (amount == MAX_TEAMS) {
+                if (amount == MAX_TEAMS)
+                {
                     btnAdd.setDisable(true);
+                }else if (amount < MAX_TEAMS)
+                {
+                    btnAdd.setDisable(false);
                 }
             }
 
@@ -116,10 +134,14 @@ public class TeamManagerController implements Initializable {
      * @throws IOException
      */
     @FXML
-    private void handleAddTeam() {
-        try {
+    private void handleAddTeam()
+    {
+        try
+        {
             model.openNewView(anchorPane, "TeamNameView", "New team");
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             Logger.getLogger(TeamManagerController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -131,68 +153,84 @@ public class TeamManagerController implements Initializable {
      * @throws IOException
      */
     @FXML
-    private void handleEditTeam() {
+    private void handleEditTeam()
+    {
         model.setEditTeam(selectedTeamIndex);
-        try {
+        try
+        {
             model.openNewView(anchorPane, "TeamNameView", "Edit team");
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             Logger.getLogger(TeamManagerController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
     @FXML
-    private void handleRemoveTeam() {
+    private void handleRemoveTeam()
+    {
 
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Remove team");
         alert.setHeaderText("Do you want to remove this team?");
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
+        if (result.get() == ButtonType.OK)
+        {
             model.removeTeam(selectedTeamIndex);
-        } else {
+        }
+        else
+        {
             // ... user chose CANCEL or closed the dialog
         }
 
     }
 
     @FXML
-    private void macros(KeyEvent key) throws IOException {
+    private void macros(KeyEvent key) throws IOException
+    {
 
-        if (key.isControlDown()) {
-            if (KeyCode.N == key.getCode() && !btnAdd.isDisable()) {
+        if (key.isControlDown())
+        {
+            if (KeyCode.N == key.getCode() && !btnAdd.isDisable())
+            {
                 handleAddTeam();
             }
 
-            if (KeyCode.E == key.getCode() && !btnEdit.isDisable()) {
+            if (KeyCode.E == key.getCode() && !btnEdit.isDisable())
+            {
                 handleEditTeam();
             }
         }
-        if (KeyCode.DELETE == key.getCode() && !btnRemove.isDisable()) {
+        if (KeyCode.DELETE == key.getCode() && !btnRemove.isDisable())
+        {
             handleRemoveTeam();
         }
     }
 
     @FXML
-    private void handleStart() {
-        
-        try 
+    private void handleStart()
+    {
+
+        try
         {
-            model.saveTeamData();
-        } 
-        catch (IOException ex) 
+            teamManager.saveTeamData();
+        }
+        catch (IOException ex)
         {
             Logger.getLogger(TeamManagerController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
         Stage primaryStage = (Stage) listTeams.getScene().getWindow();
         primaryStage.close();
 
-        try {
+        try
+        {
             model.openNewView(anchorPane, "GroupView", "");
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             Logger.getLogger(TeamManagerController.class.getName()).log(Level.SEVERE, null, ex);
         }
 

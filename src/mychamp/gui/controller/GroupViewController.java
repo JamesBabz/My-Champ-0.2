@@ -8,7 +8,6 @@ package mychamp.gui.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -16,16 +15,11 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import mychamp.be.Group;
 import mychamp.be.Team;
 import mychamp.gui.model.ChampModel;
@@ -153,6 +147,7 @@ public class GroupViewController implements Initializable {
 //        System.out.println(Arrays.toString(groupD.getAwayTeams1()));
 //        System.out.println(Arrays.toString(groupD.getHomeTeams2()));
 //        System.out.println(Arrays.toString(groupD.getAwayTeams2()));
+
     }
 
     private void groupInit()
@@ -213,29 +208,34 @@ public class GroupViewController implements Initializable {
     @FXML
     private void openNextRoundViewA() throws IOException
     {
+        setMatchRound("A");
         openNextRound("group A");
     }
 
     @FXML
     private void openNextRoundViewB() throws IOException
     {
+        setMatchRound("B");
         openNextRound("group B");
     }
 
     @FXML
     private void openNextRoundViewC() throws IOException
     {
+        setMatchRound("C");
         openNextRound("group C");
     }
 
     @FXML
     private void openNextRoundViewD() throws IOException
     {
+        setMatchRound("D");
         openNextRound("group D");
     }
 
     private void openNextRound(String title)
     {
+
         try
         {
             model.openNewView(anchorPane, "NextRoundView", title);
@@ -244,6 +244,59 @@ public class GroupViewController implements Initializable {
         {
             Logger.getLogger(TeamManagerController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void setMatchRound(String groupName)
+    {
+        Group group;
+        ObservableList<Team> groupTeams;
+        int currRound;
+        switch (groupName)
+        {
+            case "A":
+                group = groupA;
+                groupTeams = groupATeams;
+                break;
+            case "B":
+                group = groupB;
+                groupTeams = groupBTeams;
+                break;
+            case "C":
+                group = groupC;
+                groupTeams = groupCTeams;
+                break;
+            case "D":
+                group = groupD;
+                groupTeams = groupDTeams;
+                break;
+            default:
+                group = null;
+                groupTeams = null;
+                break;
+        }
+        currRound = group.getCurrentRound() - 1;
+        Team home1;
+        int home1Id;
+        Team away1;
+        int away1Id;
+        Team home2;
+        int home2Id = 0;
+        Team away2;
+        int away2Id = 0;
+
+        home1 = groupTeams.get(group.getHomeTeams1()[currRound] - 1);
+        away1 = groupTeams.get(group.getAwayTeams1()[currRound] - 1);
+        home1Id = home1.getId();
+        away1Id = away1.getId();
+
+        if (group.getAwayTeams2() != null)
+        {
+            home2 = groupTeams.get(group.getHomeTeams2()[currRound] - 1);
+            away2 = groupTeams.get(group.getAwayTeams2()[currRound] - 1);
+            home2Id = home2.getId();
+            away2Id = away2.getId();
+        }
+        model.setRoundTeams(home1Id, away1Id, home2Id, away2Id);
     }
 
 }
