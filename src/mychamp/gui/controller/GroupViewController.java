@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -20,6 +21,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import mychamp.be.Group;
 import mychamp.be.Team;
 import mychamp.gui.model.ChampModel;
@@ -129,6 +131,7 @@ public class GroupViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        
         model = ChampModel.getInstance();
         teams = model.getTeams();
         colTeamA.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -147,6 +150,9 @@ public class GroupViewController implements Initializable {
 //        System.out.println(Arrays.toString(groupD.getAwayTeams1()));
 //        System.out.println(Arrays.toString(groupD.getHomeTeams2()));
 //        System.out.println(Arrays.toString(groupD.getAwayTeams2()));
+        
+       
+        
     }
 
     private void groupInit()
@@ -261,12 +267,12 @@ public class GroupViewController implements Initializable {
                 groupTeams = groupBTeams;
                 break;
             case "C":
-                group = groupB;
-                groupTeams = groupBTeams;
+                group = groupC;
+                groupTeams = groupCTeams;
                 break;
             case "D":
-                group = groupB;
-                groupTeams = groupBTeams;
+                group = groupD;
+                groupTeams = groupDTeams;
                 break;
             default:
                 group = null;
