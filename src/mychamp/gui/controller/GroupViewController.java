@@ -147,6 +147,7 @@ public class GroupViewController implements Initializable {
 //        System.out.println(Arrays.toString(groupD.getAwayTeams1()));
 //        System.out.println(Arrays.toString(groupD.getHomeTeams2()));
 //        System.out.println(Arrays.toString(groupD.getAwayTeams2()));
+
     }
 
     private void groupInit()
@@ -261,12 +262,11 @@ public class GroupViewController implements Initializable {
                 groupTeams = groupBTeams;
                 break;
             case "C":
-                group = groupB;
-                groupTeams = groupBTeams;
+                group = groupC;
                 break;
             case "D":
-                group = groupB;
-                groupTeams = groupBTeams;
+                group = groupD;
+                groupTeams = groupDTeams;
                 break;
             default:
                 group = null;
