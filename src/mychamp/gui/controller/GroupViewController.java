@@ -22,6 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import mychamp.be.Group;
 import mychamp.be.Team;
+import mychamp.bll.PropertyValue;
 import mychamp.gui.model.ChampModel;
 
 /**
@@ -33,6 +34,7 @@ public class GroupViewController implements Initializable {
 
     ChampModel model;
 
+//    private final static String[] cellValues = new String[]{"name",""};
     private ArrayList<Team> teams;
     private ObservableList<Team> groupATeams;
     private ObservableList<Team> groupBTeams;
@@ -131,22 +133,30 @@ public class GroupViewController implements Initializable {
     {
         model = ChampModel.getInstance();
         teams = model.getTeams();
-        colTeamA.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colTeamB.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colTeamC.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colTeamD.setCellValueFactory(new PropertyValueFactory<>("name"));
+        setCellValues();
 
         groupInit();
         setTeamIds();
 
+        populateTables();
+
+    }
+
+    private void populateTables()
+    {
         tableA.setItems(groupATeams);
         tableB.setItems(groupBTeams);
         tableC.setItems(groupCTeams);
         tableD.setItems(groupDTeams);
-//        System.out.println(Arrays.toString(groupD.getHomeTeams1()));
-//        System.out.println(Arrays.toString(groupD.getAwayTeams1()));
-//        System.out.println(Arrays.toString(groupD.getHomeTeams2()));
-//        System.out.println(Arrays.toString(groupD.getAwayTeams2()));
+    }
+
+    private void setCellValues()
+    {
+
+        setGroupCellValues(tableA);
+        setGroupCellValues(tableB);
+        setGroupCellValues(tableC);
+        setGroupCellValues(tableD);
 
     }
 
@@ -299,4 +309,18 @@ public class GroupViewController implements Initializable {
         model.setRoundTeams(home1Id, away1Id, home2Id, away2Id);
     }
 
+    private void setGroupCellValues(TableView<Team> table)
+    {
+
+        ObservableList<TableColumn<Team, ?>> tableList = table.getColumns();
+
+        int x = 0;
+        for (TableColumn clmn : tableList)
+        {
+            clmn.setCellValueFactory(new PropertyValueFactory<>(PropertyValue.values()[x].toString()));
+            x++;
+        }
+
+    }
+    
 }
