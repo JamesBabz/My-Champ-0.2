@@ -5,6 +5,8 @@
  */
 package mychamp.be;
 
+import javafx.collections.ObservableList;
+
 /**
  *
  * @author James
@@ -18,12 +20,23 @@ public class Group {
     int[] homeTeams2;
     int[] awayTeams2;
     int currentRound;
+    private ObservableList<Team> teams;
 
     public Group(String name, int teams)
     {
         this.currentRound = 1;
         this.name = name;
         this.teamsInGroup = teams;
+        groupPlay(teamsInGroup);
+    }
+
+    public Group(String name, ObservableList<Team> teams)
+    {
+        this.currentRound = 1;
+        this.name = name;
+//        this.teamsInGroup = teams;
+        this.teams = teams;
+        this.teamsInGroup = teams.size();
         groupPlay(teamsInGroup);
     }
 
@@ -89,6 +102,7 @@ public class Group {
     {
         return awayTeams1;
     }
+
     public int[] getHomeTeams2()
     {
         return homeTeams2;
@@ -108,4 +122,11 @@ public class Group {
     {
         this.currentRound = currentRound;
     }
+
+    public ObservableList<Team> getTeams()
+    {
+        return teams;
+    }
+    
+    
 }

@@ -14,8 +14,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -124,6 +126,8 @@ public class GroupViewController implements Initializable {
     private TableColumn<Team, Integer> colPointsD;
     @FXML
     private AnchorPane anchorPane;
+    @FXML
+    private Button update;
 
     /**
      * Initializes the controller class.
@@ -131,10 +135,10 @@ public class GroupViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        model = ChampModel.getInstance();
-        teams = model.getTeams();
         setCellValues();
 
+        model = ChampModel.getInstance();
+        teams = model.getTeams();
         groupInit();
         setTeamIds();
 
@@ -167,10 +171,16 @@ public class GroupViewController implements Initializable {
         groupCTeams = FXCollections.observableArrayList();
         groupDTeams = FXCollections.observableArrayList();
         addTeamsToGroups(teams);
-        groupA = new Group("A", groupATeams.size());
-        groupB = new Group("B", groupBTeams.size());
-        groupC = new Group("C", groupCTeams.size());
-        groupD = new Group("D", groupDTeams.size());
+        
+//        groupA = new Group("A", groupATeams.size());
+//        groupB = new Group("B", groupBTeams.size());
+//        groupC = new Group("C", groupCTeams.size());
+//        groupD = new Group("D", groupDTeams.size());
+
+        groupA = new Group("A", groupATeams);
+        groupB = new Group("B", groupBTeams);
+        groupC = new Group("C", groupCTeams);
+        groupD = new Group("D", groupDTeams);
     }
 
     private void setTeamIds()
@@ -218,6 +228,7 @@ public class GroupViewController implements Initializable {
     @FXML
     private void openNextRoundViewA() throws IOException
     {
+        model.setGroup(groupA);
         setMatchRound("A");
         openNextRound("group A");
     }
@@ -225,6 +236,7 @@ public class GroupViewController implements Initializable {
     @FXML
     private void openNextRoundViewB() throws IOException
     {
+        model.setGroup(groupB);
         setMatchRound("B");
         openNextRound("group B");
     }
@@ -232,6 +244,7 @@ public class GroupViewController implements Initializable {
     @FXML
     private void openNextRoundViewC() throws IOException
     {
+        model.setGroup(groupC);
         setMatchRound("C");
         openNextRound("group C");
     }
@@ -239,6 +252,7 @@ public class GroupViewController implements Initializable {
     @FXML
     private void openNextRoundViewD() throws IOException
     {
+        model.setGroup(groupD);
         setMatchRound("D");
         openNextRound("group D");
     }
@@ -321,6 +335,15 @@ public class GroupViewController implements Initializable {
             x++;
         }
 
+    }
+
+    @FXML
+    private void update()
+    {
+        tableA.refresh();
+        tableB.refresh();
+        tableC.refresh();
+        tableD.refresh();
     }
     
 }
