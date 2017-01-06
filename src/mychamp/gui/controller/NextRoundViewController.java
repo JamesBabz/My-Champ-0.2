@@ -7,6 +7,7 @@ package mychamp.gui.controller;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -53,8 +54,14 @@ public class NextRoundViewController implements Initializable
     {
         ChampModel model = ChampModel.getInstance();
         getLblName(model);
-   
-    }    
+        getLblRound();
+
+    }
+
+    private void getLblRound()
+    {
+
+    }
 
     private void getLblName(ChampModel model)
     {
@@ -64,19 +71,30 @@ public class NextRoundViewController implements Initializable
             if (team.getId() == model.getFirstMatch()[0])
             {
                 lblHome1.setText(team.getName());
-            } else if (team.getId() == model.getFirstMatch() [1])
+            } else if (team.getId() == model.getFirstMatch()[1])
             {
                 lblAway1.setText(team.getName());
-            } else if (team.getId()==model.getSecondMatch()[0])
-            {
-                lblHome2.setText(team.getName());
-            } else if (team.getId() == model.getSecondMatch()[1])
-            {
-                lblAway2.setText(team.getName());
             }
-            
-            
+
+            if (model.getSecondMatch()[0] != 0)
+            {
+                if (team.getId() == model.getSecondMatch()[0])
+                {
+                    lblHome2.setText(team.getName());
+                } else if (team.getId() == model.getSecondMatch()[1])
+                {
+                    lblAway2.setText(team.getName());
+
+                }
+
+            } else
+            {
+                lblHome2.setDisable(true);
+                lblAway2.setDisable(true);
+                txtHome2.setDisable(true);
+                txtAway2.setDisable(true);
+
+            }
         }
-    }    
-    
+    }
 }
