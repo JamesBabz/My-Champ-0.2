@@ -72,7 +72,7 @@ public class NextRoundViewController implements Initializable {
 
     private void getLblRound()
     {
-        lblRoundNumb.setText(group.getCurrentRound() + "");
+        lblRoundNumb.setText("Round: " + group.getCurrentRound());
     }
 
     private void getLblName(ChampModel model)
