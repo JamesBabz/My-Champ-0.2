@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import mychamp.be.Group;
 import mychamp.be.Team;
 import mychamp.dal.TeamDAO;
 
@@ -27,8 +28,10 @@ public class ChampModel {
 
     private final ArrayList<Team> teams;
     private final ObservableList<String> teamNames;
+    private final ObservableList<String> test;
     private Team editTeam;
     private TeamDAO teamDAO;
+    private Group group;
     int[] firstMatch;
     int[] secondMatch;
 
@@ -47,6 +50,7 @@ public class ChampModel {
     public ChampModel()
     {
         this.teamNames = FXCollections.observableArrayList();
+        this.test = FXCollections.observableArrayList();
         teams = new ArrayList<>();
         teamDAO = new TeamDAO();
 
@@ -166,6 +170,24 @@ public class ChampModel {
     {
         return secondMatch;
     }
+
+    public void setGroup(Group group)
+    {
+        this.group = group;
+    }
+
+    public Group getGroup()
+    {
+        return group;
+    }
+
+    public ObservableList<String> getTest()
+    {
+        return test;
+    }
+    
+    
+    
     
     
 }
