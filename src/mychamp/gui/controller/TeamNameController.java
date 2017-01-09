@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mychamp.gui.controller;
 
 import java.net.URL;
@@ -19,19 +14,28 @@ import mychamp.gui.model.ChampModel;
 /**
  * FXML Controller class
  *
- * @author James
+ * @author Thomas Meyer Hansen, Simon Juhl Birkedal, Stephan Fuhlendorff & Jacob
+ * Enemark
  */
-public class TeamNameController implements Initializable {
-
+public class TeamNameController implements Initializable
+{
+    private ChampModel model;
+    private boolean isEdit;
+    
     @FXML
     private Button btnCancel;
     @FXML
     private TextField txtName;
-
-    private ChampModel model;
-    private boolean isEdit = false;
     @FXML
     private AnchorPane anchorPane;
+
+    /**
+     * The default constructor for the Team Name Controller.
+     */
+    public TeamNameController()
+    {
+        this.isEdit = false;
+    }
 
     /**
      * Initializes the controller class.
@@ -50,19 +54,16 @@ public class TeamNameController implements Initializable {
         }
     }
 
-    /**
-     * Saves when "save" is pressed
-     */
     @FXML
     private void handleSave()
     {
         String name = txtName.getText();
         if (name.equals(""))
         {
-             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Error");
-        alert.setHeaderText("Team name cannot be empty");
-        alert.showAndWait();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Team name cannot be empty");
+            alert.showAndWait();
         }
         else
         {
@@ -77,16 +78,16 @@ public class TeamNameController implements Initializable {
             closeWindow();
         }
     }
-
-    /**
-     * Cancels and closes the window when "cancel" is pressed
-     */
+    
     @FXML
     private void handleCancel()
     {
         closeWindow();
     }
 
+    /**
+     * Closes the stage currently active.
+     */
     private void closeWindow()
     {
         Stage stage = (Stage) btnCancel.getScene().getWindow();

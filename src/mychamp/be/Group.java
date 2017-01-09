@@ -1,16 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mychamp.be;
+
+import javafx.collections.ObservableList;
 
 /**
  *
- * @author James
+ * @author Thomas Meyer Hansen, Simon Juhl Birkedal, Stephan Fuhlendorff & Jacob
+ * Enemark
  */
-public class Group {
-
+public class Group
+{
     String name;
     int teamsInGroup;
     int[] homeTeams1;
@@ -18,7 +16,14 @@ public class Group {
     int[] homeTeams2;
     int[] awayTeams2;
     int currentRound;
+    private ObservableList<Team> teams;
 
+    /**
+     * The default constructor for creating a group.
+     *
+     * @param name The group's name.
+     * @param teams The amount of teams the group contains.
+     */
     public Group(String name, int teams)
     {
         this.currentRound = 1;
@@ -27,6 +32,27 @@ public class Group {
         groupPlay(teamsInGroup);
     }
 
+    /**
+     * An alternative constructor that takes an observablelist as a teams
+     * argument.
+     *
+     * @param name The group's name.
+     * @param teams The list of teams the group contains.
+     */
+    public Group(String name, ObservableList<Team> teams)
+    {
+        this.currentRound = 1;
+        this.name = name;
+//        this.teamsInGroup = teams;
+        this.teams = teams;
+        this.teamsInGroup = teams.size();
+        groupPlay(teamsInGroup);
+    }
+
+    /**
+     *
+     * @param teams
+     */
     private void groupPlay(int teams)
     {
         switch (teams)
@@ -43,6 +69,9 @@ public class Group {
         }
     }
 
+    /**
+     *
+     */
     private void groupOf3()
     {
         homeTeams1 = new int[]
@@ -55,6 +84,9 @@ public class Group {
         };
     }
 
+    /**
+     *
+     */
     private void groupOf4()
     {
         homeTeams1 = new int[]
@@ -75,37 +107,87 @@ public class Group {
         };
     }
 
+    /**
+     * Gets the teams currently in this group.
+     *
+     * @return Returns the teams currently in a group, represented by an
+     * integer.
+     */
     public int getTeamsInGroup()
     {
         return teamsInGroup;
     }
 
+    /**
+     * Gets the first home team.
+     *
+     * @return Returns the first home teams represented by an array of integers.
+     */
     public int[] getHomeTeams1()
     {
         return homeTeams1;
     }
 
+    /**
+     * Gets the first away team.
+     *
+     * @return Returns the first away teams represented by an array of integers.
+     */
     public int[] getAwayTeams1()
     {
         return awayTeams1;
     }
+
+    /**
+     * Gets the second home team.
+     *
+     * @return Returns the second home teams represented by an array of
+     * integers.
+     */
     public int[] getHomeTeams2()
     {
         return homeTeams2;
     }
 
+    /**
+     * Gets the second away team.
+     *
+     * @return Returns the second away teams represented by an array of
+     * integers.
+     */
     public int[] getAwayTeams2()
     {
         return awayTeams2;
     }
 
+    /**
+     * Gets the current round being played.
+     *
+     * @return Returns an integer representing the currently playing round.
+     */
     public int getCurrentRound()
     {
         return currentRound;
     }
 
+    /**
+     * Sets the current round.
+     *
+     * @param currentRound The round to be played.
+     */
     public void setCurrentRound(int currentRound)
     {
         this.currentRound = currentRound;
     }
+
+    /**
+     * Gets the teams in this group.
+     *
+     * @return Returns the teams in this group.
+     */
+    public ObservableList<Team> getTeams()
+    {
+        return teams;
+    }
+
 }

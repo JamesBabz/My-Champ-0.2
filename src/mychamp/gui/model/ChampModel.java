@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mychamp.gui.model;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
@@ -16,25 +10,32 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import mychamp.be.Group;
 import mychamp.be.Team;
 import mychamp.dal.TeamDAO;
 
 /**
  *
- * @author Thomas
+ * @author Thomas Meyer Hansen, Simon Juhl Birkedal, Stephan Fuhlendorff & Jacob
+ * Enemark
  */
-public class ChampModel {
-
+public class ChampModel
+{
     private final ArrayList<Team> teams;
     private final ObservableList<String> teamNames;
+    private final ObservableList<String> test;
+    private final TeamDAO teamDAO;
     private Team editTeam;
-    private TeamDAO teamDAO;
-    int[] firstMatch;
-    int[] secondMatch;
+    private Group group;
+    private int[] firstMatch;
+    private int[] secondMatch;
 
     private static ChampModel instance;
 
-    //Singleton
+    /**
+     * A singleton pattern to retrieve model data.
+     * @return Returns the initialized model.
+     */
     public static ChampModel getInstance()
     {
         if (instance == null)
@@ -44,17 +45,28 @@ public class ChampModel {
         return instance;
     }
 
-    public ChampModel()
+    /**
+     * A private constructor used for initializing the models data.
+     */
+    private ChampModel()
     {
         this.teamNames = FXCollections.observableArrayList();
+        this.test = FXCollections.observableArrayList();
         teams = new ArrayList<>();
         teamDAO = new TeamDAO();
 
     }
 
-    public void openNewView(Pane current, String viewName, String title) throws IOException
+    /**
+     * Generates and opens a new view.
+     * @param pane The pane to get the window owner of. (Typically the current pane)
+     * @param viewName
+     * @param title
+     * @throws IOException 
+     */
+    public void openNewView(Pane pane, String viewName, String title) throws IOException
     {
-        Stage primaryStage = (Stage) current.getScene().getWindow();
+        Stage primaryStage = (Stage) pane.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mychamp/gui/view/" + viewName + ".fxml"));
         Parent root = loader.load();
 
@@ -75,7 +87,6 @@ public class ChampModel {
      */
     public void addTeam(String name)
     {
-        
         Team team = new Team(name);
         teams.add(team);
         setTeamNames();
@@ -113,18 +124,25 @@ public class ChampModel {
         }
     }
 
-    public void removeTeam(int team)
+    /**
+     * Removes a team from the list by a given index.
+     * @param teamIndex The index of the team.
+     */
+    public void removeTeam(int teamIndex)
     {
-
-        teams.remove(team);
+        teams.remove(teamIndex);
         setTeamNames();
     }
 
-    public void setEditTeam(int team)
+    /**
+     * Edits a team by it's given index.
+     * @param teamIndex The index of the team to be edited.
+     */
+    public void setEditTeam(int teamIndex)
     {
-        if (team >= 0)
+        if (teamIndex >= 0)
         {
-            editTeam = teams.get(team);
+            editTeam = teams.get(teamIndex);
         }
         else
         {
@@ -132,11 +150,19 @@ public class ChampModel {
         }
     }
 
+    /**
+     * Gets the recently edited team.
+     * @return Returns a team representing the most recent edited team.
+     */
     public Team getEditTeam()
     {
         return editTeam;
     }
 
+    /**
+     * Edits the name of the current editable team.
+     * @param name The new name of the team.
+     */
     public void editTeam(String name)
     {
         int index = teams.indexOf(editTeam);
@@ -144,7 +170,14 @@ public class ChampModel {
         editTeam = null;
         setTeamNames();
     }
-    
+
+    /**
+     * 
+     * @param home1Id
+     * @param away1Id
+     * @param home2Id
+     * @param away2Id 
+     */
     public void setRoundTeams(int home1Id, int away1Id, int home2Id, int away2Id)
     {
         firstMatch = new int[]
@@ -157,15 +190,49 @@ public class ChampModel {
         };
     }
 
+    /**
+     * 
+     * @return 
+     */
     public int[] getFirstMatch()
     {
         return firstMatch;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public int[] getSecondMatch()
     {
         return secondMatch;
     }
-    
-    
+
+    /**
+     * 
+     * @param group 
+     */
+    public void setGroup(Group group)
+    {
+        this.group = group;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public Group getGroup()
+    {
+        return group;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public ObservableList<String> getTest()
+    {
+        return test;
+    }
+
 }
