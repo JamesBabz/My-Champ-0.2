@@ -56,6 +56,10 @@ public class Group {
         }
     }
 
+    /**
+     * The structure for our groups / matches
+     * Handles groups of 3
+     */
     private void groupOf3()
     {
         homeTeams1 = new int[]
@@ -68,6 +72,10 @@ public class Group {
         };
     }
 
+    /**
+     * The structure for our groups / matches
+     * Handles groups of 4
+     */
     private void groupOf4()
     {
         homeTeams1 = new int[]

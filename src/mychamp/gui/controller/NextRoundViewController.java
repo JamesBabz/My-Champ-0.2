@@ -70,11 +70,19 @@ public class NextRoundViewController implements Initializable {
         getLblRound();
     }
 
+    /**
+     * Shows the current round in the NextRoundView.
+     */
     private void getLblRound()
     {
         lblRoundNumb.setText("Round: " + group.getCurrentRound());
     }
 
+    /**
+     * Handles which teams Shows up as home or away in the nextroundview.
+     * In cases with only 3 teams in a group the second match lbls are disabled.
+     * @param model 
+     */
     private void getLblName(ChampModel model)
     {
         ArrayList<Team> teams = model.getTeams();
@@ -117,6 +125,9 @@ public class NextRoundViewController implements Initializable {
         }
     }
 
+    /**
+     * Handles the save button, and put the data from this into the GroupViewController.
+     */
     @FXML
     private void handleSave()
     {
@@ -137,6 +148,9 @@ public class NextRoundViewController implements Initializable {
         closeWindow();
     }
 
+    /**
+     * Closes the view.
+     */
     @FXML
     private void handleCancel()
     {
@@ -149,6 +163,13 @@ public class NextRoundViewController implements Initializable {
         stage.close();
     }
 
+    /**
+     * Sets the match scores for each match.
+     * @param homeTeam
+     * @param awayTeam
+     * @param homeScore
+     * @param awayScore 
+     */
     private void setMatch(Team homeTeam, Team awayTeam, int homeScore, int awayScore)
     {
 
