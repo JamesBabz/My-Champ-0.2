@@ -29,6 +29,12 @@ public class TeamManager {
 
     }
 
+    /**
+     * Loads our data from the .dat file.
+     * @throws IOException
+     * @throws FileNotFoundException
+     * @throws ClassNotFoundException 
+     */
     public void loadTeamData() throws IOException, FileNotFoundException, ClassNotFoundException
     {
 
@@ -41,6 +47,10 @@ public class TeamManager {
 
     }
 
+    /**
+     * Saves our teamdata to .dat file.
+     * @throws IOException 
+     */
     public void saveTeamData() throws IOException
     {
         ArrayList<Team> teamsToSave = new ArrayList<>();

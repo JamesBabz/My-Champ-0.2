@@ -146,6 +146,9 @@ public class GroupViewController implements Initializable {
 
     }
 
+    /**
+     * Handles table teams.
+     */
     private void populateTables()
     {
         tableA.setItems(groupATeams);
@@ -154,6 +157,9 @@ public class GroupViewController implements Initializable {
         tableD.setItems(groupDTeams);
     }
 
+    /**
+     * ???
+     */
     private void setCellValues()
     {
 
@@ -164,6 +170,10 @@ public class GroupViewController implements Initializable {
 
     }
 
+    /**
+     * Handles the the new groups for match rounds. 
+     * ???
+     */
     private void groupInit()
     {
         groupATeams = FXCollections.observableArrayList();
@@ -183,6 +193,9 @@ public class GroupViewController implements Initializable {
         groupD = new Group("D", groupDTeams);
     }
 
+    /**
+     * Sets the team Ids.
+     */
     private void setTeamIds()
     {
         for (Team team : teams)
@@ -191,6 +204,10 @@ public class GroupViewController implements Initializable {
         }
     }
 
+    /**
+     * Shuffles the teams into the match schdule.
+     * @param teams 
+     */
     private void addTeamsToGroups(ArrayList<Team> teams)
     {
         Collections.shuffle(teams);
@@ -225,6 +242,10 @@ public class GroupViewController implements Initializable {
         }
     }
 
+    /**
+     * Opens next round.
+     * @throws IOException 
+     */
     @FXML
     private void openNextRoundViewA() throws IOException
     {
@@ -233,6 +254,10 @@ public class GroupViewController implements Initializable {
         openNextRound("group A");
     }
 
+    /**
+     * Opens next round.
+     * @throws IOException 
+     */
     @FXML
     private void openNextRoundViewB() throws IOException
     {
@@ -241,6 +266,10 @@ public class GroupViewController implements Initializable {
         openNextRound("group B");
     }
 
+    /**
+     * Opens next round.
+     * @throws IOException 
+     */
     @FXML
     private void openNextRoundViewC() throws IOException
     {
@@ -249,6 +278,10 @@ public class GroupViewController implements Initializable {
         openNextRound("group C");
     }
 
+    /**
+     * Opens next round.
+     * @throws IOException 
+     */
     @FXML
     private void openNextRoundViewD() throws IOException
     {
@@ -257,6 +290,10 @@ public class GroupViewController implements Initializable {
         openNextRound("group D");
     }
 
+    /**
+     * Opens next round view - used in the 4 OpenNextRoundView methods.
+     * @param title 
+     */
     private void openNextRound(String title)
     {
 
@@ -270,6 +307,10 @@ public class GroupViewController implements Initializable {
         }
     }
 
+    /**
+     * Handles which match round the tournament is at.
+     * @param groupName 
+     */
     private void setMatchRound(String groupName)
     {
         Group group;
@@ -323,6 +364,10 @@ public class GroupViewController implements Initializable {
         model.setRoundTeams(home1Id, away1Id, home2Id, away2Id);
     }
 
+    /**
+     * Handles the cell values for the groups
+     * @param table 
+     */
     private void setGroupCellValues(TableView<Team> table)
     {
 
