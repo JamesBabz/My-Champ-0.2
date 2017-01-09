@@ -56,6 +56,14 @@ public class ChampModel {
 
     }
 
+    
+    /**
+     * Open new view.
+     * @param current
+     * @param viewName
+     * @param title
+     * @throws IOException 
+     */
     public void openNewView(Pane current, String viewName, String title) throws IOException
     {
         Stage primaryStage = (Stage) current.getScene().getWindow();
@@ -117,6 +125,7 @@ public class ChampModel {
         }
     }
 
+    
     public void removeTeam(int team)
     {
 
