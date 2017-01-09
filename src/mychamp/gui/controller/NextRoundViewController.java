@@ -149,7 +149,7 @@ public class NextRoundViewController implements Initializable {
     }
 
     /**
-     * Closes the view.
+     * Cancels and closes the window when "cancel" is pressed
      */
     @FXML
     private void handleCancel()

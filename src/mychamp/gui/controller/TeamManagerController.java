@@ -103,6 +103,10 @@ public class TeamManagerController implements Initializable {
         });
     }
 
+    /**
+     * Checks if enough teams are added to the TeamManagerView - Between 12 & 16
+     * @param list 
+     */
     private void observableListListener(ObservableList list)
     {
         list.addListener(new ListChangeListener() {
@@ -185,6 +189,11 @@ public class TeamManagerController implements Initializable {
 
     }
 
+    /**
+     * Commands to different parts of the program.
+     * @param key
+     * @throws IOException 
+     */
     @FXML
     private void macros(KeyEvent key) throws IOException
     {
@@ -207,6 +216,10 @@ public class TeamManagerController implements Initializable {
         }
     }
 
+    /**
+     * Opens the GroupView whenever Start is pressed.
+     */
+    
     @FXML
     private void handleStart()
     {
